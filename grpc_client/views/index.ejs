@@ -1,138 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>gRPC Client</title>
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-    input[type="text"], input[type="number"], input[type="url"] { width: 100%; padding: 10px; margin: 10px 0; }
-    button { padding: 10px 20px; }
-    .form-section { margin-bottom: 40px; }
-  </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>gRPC Client</h1>
-    
-    <!-- Formulario para SayHello -->
-    <div class="form-section">
-      <h2>Say Hello</h2>
-      <form action="/send" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <button type="submit">Send</button>
-      </form>
-      <% if (message && !usuario && !producto && !tienda) { %>
-        <p><strong>Response:</strong> <%= message %></p>
-      <% } %>
-    </div>
-    
-    <!-- Formulario para crear Usuario -->
-    <div class="form-section">
-      <h2>Create Usuario</h2>
-      <form action="/createUsuario" method="post">
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="id" required>
-        <label for="nombreUsuario">Username:</label>
-        <input type="text" id="nombreUsuario" name="nombreUsuario" required>
-        <label for="contrasena">Password:</label>
-        <input type="text" id="contrasena" name="contrasena" required>
-        <label for="tienda_id">Store ID:</label>
-        <input type="text" id="tienda_id" name="tienda_id" required>
-        <label for="nombre">Name:</label>
-        <input type="text" id="nombre" name="nombre" required>
-        <label for="apellido">Last Name:</label>
-        <input type="text" id="apellido" name="apellido" required>
-        <label for="habilitado">Enabled:</label>
-        <input type="checkbox" id="habilitado" name="habilitado" value="true">
-        <button type="submit">Create Usuario</button>
-      </form>
-      <% if (usuario) { %>
-        <p><strong>Usuario creado:</strong> <%= usuario.nombreUsuario %></p>
-      <% } %>
-    </div>
-    
-    <!-- Formulario para crear Producto -->
-    <div class="form-section">
-      <h2>Create Producto</h2>
-      <form action="/createProducto" method="post">
-        <label for="id">ID:</label>
-        <input type="number" id="id" name="id" required>
-        <label for="nombre">Name:</label>
-        <input type="text" id="nombre" name="nombre" required>
-        <label for="codigo">Code:</label>
-        <input type="text" id="codigo" name="codigo" required>
-        <label for="talle">Size:</label>
-        <input type="text" id="talle" name="talle" required>
-        <label for="foto">Photo URL:</label>
-        <input type="url" id="foto" name="foto" required>
-        <label for="color">Color:</label>
-        <input type="text" id="color" name="color" required>
-        <label for="tienda_ids">Store IDs (comma separated):</label>
-        <input type="text" id="tienda_ids" name="tienda_ids">
-        <button type="submit">Create Producto</button>
-      </form>
-      <% if (producto) { %>
-        <p><strong>Producto creado:</strong> <%= producto.nombre %></p>
-      <% } %>
-    </div>
-    
-    <!-- Formulario para crear Tienda -->
-    <div class="form-section">
-      <h2>Create Tienda</h2>
-      <form action="/createTienda" method="post">
-        <label for="codigo">Store Code:</label>
-        <input type="text" id="codigo" name="codigo" required>
-        <label for="direccion">Address:</label>
-        <input type="text" id="direccion" name="direccion" required>
-        <label for="ciudad">City:</label>
-        <input type="text" id="ciudad" name="ciudad" required>
-        <label for="provincia">Province:</label>
-        <input type="text" id="provincia" name="provincia" required>
-        <label for="habilitada">Enabled:</label>
-        <input type="checkbox" id="habilitada" name="habilitada" value="true">
-        <label for="producto_ids">Product IDs (comma separated):</label>
-        <input type="text" id="producto_ids" name="producto_ids">
-        <button type="submit">Create Tienda</button>
-      </form>
-      <% if (tienda) { %>
-        <p><strong>Tienda creada:</strong> <%= tienda.codigo %></p>
-      <% } %>
-    </div>
+  <!-- Formulario para login -->
+<div class="form-section">
+  <h2>Login</h2>
+  <form action="/login" method="post">
+    <label for="nombreUsuario">Username:</label>
+    <input type="text" id="nombreUsuario" name="nombreUsuario" required>
+    <label for="contrasena">Password:</label>
+    <input type="password" id="contrasena" name="contrasena" required>
+    <button type="submit">Login</button>
+  </form>
+  <% if (message && !usuario) { %>
+    <p><strong>Response:</strong> <%= message %></p>
+  <% } %>
+</div>
 
 
-
-    <h2>Usuarios</h2>
-    <% if (usuarios) { %>
-        <ul>
-            <% usuarios.forEach(function(usuario) { %>
-                <li><%= usuario.nombreUsuario %> - <%= usuario.nombre %> <%= usuario.apellido %></li>
-            <% }); %>
-        </ul>
-    <% } %>
-
-    <h2>Productos</h2>
-    <% if (productos) { %>
-        <ul>
-            <% productos.forEach(function(producto) { %>
-                <li><%= producto.nombre %> - <%= producto.codigo %></li>
-            <% }); %>
-        </ul>
-    <% } %>
-
-    <h2>Tiendas</h2>
-    <% if (tiendas) { %>
-        <ul>
-            <% tiendas.forEach(function(tienda) { %>
-                <li><%= tienda.codigo %> - <%= tienda.direccion %> - <%= tienda.ciudad %> - <%= tienda.provincia %></li>
-            <% }); %>
-        </ul>
-    <% } %>
-
-    <p><%= message %></p>
-
-
-
-  </div>
-</body>
 </html>

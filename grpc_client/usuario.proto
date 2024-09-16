@@ -24,4 +24,14 @@ service UsuarioService {
     rpc UpdateUsuario(Usuario) returns (Usuario);
     rpc DeleteUsuario(Usuario) returns (Usuario);
     rpc ListUsuarios(Empty) returns (UsuarioList);
+    
+}
+
+message LoginRequest {
+  string nombreUsuario = 1;
+  string contrasena = 2;
+}
+
+message LoginResponse {
+  bool success = 1;
 }

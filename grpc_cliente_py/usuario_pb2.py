@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 import empty_pb2 as empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rusuario.proto\x1a\x0b\x65mpty.proto\"\x89\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x15\n\rnombreUsuario\x18\x02 \x01(\t\x12\x12\n\ncontrasena\x18\x03 \x01(\t\x12\x11\n\ttienda_id\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x12\n\nhabilitado\x18\x07 \x01(\x08\")\n\x0bUsuarioList\x12\x1a\n\x08usuarios\x18\x01 \x03(\x0b\x32\x08.Usuario2\xc7\x01\n\x0eUsuarioService\x12#\n\rCreateUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12 \n\nGetUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12#\n\rUpdateUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12#\n\rDeleteUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12$\n\x0cListUsuarios\x12\x06.Empty\x1a\x0c.UsuarioListb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rusuario.proto\x1a\x0b\x65mpty.proto\"\x89\x01\n\x07Usuario\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x15\n\rnombreUsuario\x18\x02 \x01(\t\x12\x12\n\ncontrasena\x18\x03 \x01(\t\x12\x11\n\ttienda_id\x18\x04 \x01(\t\x12\x0e\n\x06nombre\x18\x05 \x01(\t\x12\x10\n\x08\x61pellido\x18\x06 \x01(\t\x12\x12\n\nhabilitado\x18\x07 \x01(\x08\")\n\x0bUsuarioList\x12\x1a\n\x08usuarios\x18\x01 \x03(\x0b\x32\x08.Usuario\"9\n\x0cLoginRequest\x12\x15\n\rnombreUsuario\x18\x01 \x01(\t\x12\x12\n\ncontrasena\x18\x02 \x01(\t\" \n\rLoginResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x32\xef\x01\n\x0eUsuarioService\x12#\n\rCreateUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12 \n\nGetUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12#\n\rUpdateUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12#\n\rDeleteUsuario\x12\x08.Usuario\x1a\x08.Usuario\x12$\n\x0cListUsuarios\x12\x06.Empty\x1a\x0c.UsuarioList\x12&\n\x05Login\x12\r.LoginRequest\x1a\x0e.LoginResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,6 +36,10 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_USUARIO']._serialized_end=168
   _globals['_USUARIOLIST']._serialized_start=170
   _globals['_USUARIOLIST']._serialized_end=211
-  _globals['_USUARIOSERVICE']._serialized_start=214
-  _globals['_USUARIOSERVICE']._serialized_end=413
+  _globals['_LOGINREQUEST']._serialized_start=213
+  _globals['_LOGINREQUEST']._serialized_end=270
+  _globals['_LOGINRESPONSE']._serialized_start=272
+  _globals['_LOGINRESPONSE']._serialized_end=304
+  _globals['_USUARIOSERVICE']._serialized_start=307
+  _globals['_USUARIOSERVICE']._serialized_end=546
 # @@protoc_insertion_point(module_scope)

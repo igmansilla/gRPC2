@@ -61,6 +61,11 @@ class UsuarioServiceStub(object):
                 request_serializer=empty__pb2.Empty.SerializeToString,
                 response_deserializer=usuario__pb2.UsuarioList.FromString,
                 _registered_method=True)
+        self.Login = channel.unary_unary(
+                '/UsuarioService/Login',
+                request_serializer=usuario__pb2.LoginRequest.SerializeToString,
+                response_deserializer=usuario__pb2.LoginResponse.FromString,
+                _registered_method=True)
 
 
 class UsuarioServiceServicer(object):
@@ -97,6 +102,12 @@ class UsuarioServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Login(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UsuarioServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -124,6 +135,11 @@ def add_UsuarioServiceServicer_to_server(servicer, server):
                     servicer.ListUsuarios,
                     request_deserializer=empty__pb2.Empty.FromString,
                     response_serializer=usuario__pb2.UsuarioList.SerializeToString,
+            ),
+            'Login': grpc.unary_unary_rpc_method_handler(
+                    servicer.Login,
+                    request_deserializer=usuario__pb2.LoginRequest.FromString,
+                    response_serializer=usuario__pb2.LoginResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -262,6 +278,33 @@ class UsuarioService(object):
             '/UsuarioService/ListUsuarios',
             empty__pb2.Empty.SerializeToString,
             usuario__pb2.UsuarioList.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Login(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/UsuarioService/Login',
+            usuario__pb2.LoginRequest.SerializeToString,
+            usuario__pb2.LoginResponse.FromString,
             options,
             channel_credentials,
             insecure,

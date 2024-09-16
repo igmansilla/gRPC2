@@ -29,3 +29,17 @@ class UsuarioList(_message.Message):
     USUARIOS_FIELD_NUMBER: _ClassVar[int]
     usuarios: _containers.RepeatedCompositeFieldContainer[Usuario]
     def __init__(self, usuarios: _Optional[_Iterable[_Union[Usuario, _Mapping]]] = ...) -> None: ...
+
+class LoginRequest(_message.Message):
+    __slots__ = ("nombreUsuario", "contrasena")
+    NOMBREUSUARIO_FIELD_NUMBER: _ClassVar[int]
+    CONTRASENA_FIELD_NUMBER: _ClassVar[int]
+    nombreUsuario: str
+    contrasena: str
+    def __init__(self, nombreUsuario: _Optional[str] = ..., contrasena: _Optional[str] = ...) -> None: ...
+
+class LoginResponse(_message.Message):
+    __slots__ = ("success",)
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: bool = ...) -> None: ...
