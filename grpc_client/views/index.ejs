@@ -1,166 +1,105 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administración de Tiendas y Productos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        h1 {
-            margin: 0;
-        }
-        form {
-            margin: 2rem 0;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        form input, form select, form button {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%;
-        }
-        button {
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #4cae4c;
-        }
-        .list {
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin: 2rem 0;
-        }
-        .list table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .list table, .list th, .list td {
-            border: 1px solid #ddd;
-        }
-        .list th, .list td {
-            padding: 0.5rem;
-            text-align: left;
-        }
-        .list th {
-            background-color: #f4f4f4;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .password-container {
+      position: relative;
+    }
+    .password-container input[type="password"] {
+      padding-right: 40px; /* Make space for the eye icon */
+    }
+    .password-container .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Administración de Tiendas y Productos</h1>
-        </div>
-    </header>
+  <div class="container">
+    <h1>Login</h1>
+    <form action="/login" method="post">
+      <label for="nombreUsuario">Nombre de Usuario:</label>
+      <input type="text" id="nombreUsuario" name="nombreUsuario" required>
+      
+      <label for="contrasena">Contraseña:</label>
+      <div class="password-container">
+        <input type="password" id="contrasena" name="contrasena" required>
+        <span class="toggle-password" id="togglePassword">👁️</span>
+      </div>
+      
+      <button type="submit">Login</button>
+    </form>
+  </div>
 
-    <div class="container">
-        <!-- Formulario para crear ProductoTienda -->
-        <form action="/createProductoTienda" method="post">
-            <h2>Crear ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID" required>
-            <input type="number" name="producto_id" placeholder="ID del Producto" required>
-            <input type="text" name="tienda_id" placeholder="Código de la Tienda" required>
-            <input type="text" name="color" placeholder="Color" required>
-            <input type="text" name="talle" placeholder="Talle" required>
-            <input type="number" name="cantidad" placeholder="Cantidad" required>
-            <button type="submit">Crear ProductoTienda</button>
-        </form>
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('contrasena');
 
-        <!-- Formulario para actualizar ProductoTienda -->
-        <form action="/updateProductoTienda" method="post">
-            <h2>Actualizar ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID del ProductoTienda" required>
-            <input type="number" name="producto_id" placeholder="ID del Producto" required>
-            <input type="text" name="tienda_id" placeholder="Código de la Tienda" required>
-            <input type="text" name="color" placeholder="Color" required>
-            <input type="text" name="talle" placeholder="Talle" required>
-            <input type="number" name="cantidad" placeholder="Cantidad" required>
-            <button type="submit">Actualizar ProductoTienda</button>
-        </form>
+    togglePassword.addEventListener('click', () => {
+      // Toggle the type attribute
+      const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordField.setAttribute('type', type);
 
-        <!-- Formulario para eliminar ProductoTienda -->
-        <form action="/deleteProductoTienda" method="post">
-            <h2>Eliminar ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID del ProductoTienda" required>
-            <button type="submit">Eliminar ProductoTienda</button>
-        </form>
-
-        <!-- Formulario para listar ProductoTienda -->
-        <div class="list">
-            <h2>Lista de ProductoTienda</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Producto</th>
-                        <th>Código Tienda</th>
-                        <th>Color</th>
-                        <th>Talle</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody id="productoTiendaList">
-                    <!-- Aquí se llenarán los datos de ProductoTienda con JavaScript -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Similar formularios y listas para Producto, Tienda y Usuario aquí -->
-
-    </div>
-
-    <script>
-        // Ejemplo de cómo puedes llenar la lista con datos desde el servidor
-        async function loadProductoTiendas() {
-            try {
-                const response = await fetch('/listProductoTiendas');
-                const data = await response.json();
-                const tableBody = document.getElementById('productoTiendaList');
-
-                data.productos.forEach(productoTienda => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${productoTienda.id}</td>
-                        <td>${productoTienda.producto_id}</td>
-                        <td>${productoTienda.tienda_id}</td>
-                        <td>${productoTienda.color}</td>
-                        <td>${productoTienda.talle}</td>
-                        <td>${productoTienda.cantidad}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error al cargar ProductoTiendas:', error);
-            }
-        }
-
-        // Cargar los datos cuando la página se carga
-        document.addEventListener('DOMContentLoaded', loadProductoTiendas);
-    </script>
+      // Toggle the eye icon
+      togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+  </script>
 </body>
 </html>

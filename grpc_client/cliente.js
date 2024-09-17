@@ -8,6 +8,18 @@ const tiendaRoutes = require('./routes/tiendas');
 const app = express();
 const port = 3000;
 
+
+// Variable global para gestionar la autenticación
+let isAuthenticated = false;
+
+// Middleware para pasar la variable global a todas las vistas
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = isAuthenticated;
+  next();
+});
+
+
+
 // Configuración para servir archivos estáticos y vistas
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
