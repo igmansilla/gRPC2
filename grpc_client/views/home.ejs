@@ -11,156 +11,91 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
         header {
             background: #333;
             color: #fff;
             padding: 1rem 0;
-            text-align: center;
         }
-        h1 {
-            margin: 0;
+        .header-container {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        form {
-            margin: 2rem 0;
-            background: #fff;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
         }
-        form input, form select, form button {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%;
-        }
-        button {
-            background-color: #5cb85c;
+        .header-buttons button {
+            background: #555;
             color: white;
             border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #4cae4c;
-        }
-        .list {
-            background: #fff;
             padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin: 2rem 0;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 1rem;
         }
-        .list table {
-            width: 100%;
-            border-collapse: collapse;
+        .header-buttons button:hover {
+            background: #777;
         }
-        .list table, .list th, .list td {
-            border: 1px solid #ddd;
+        .logout-button {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 1.2rem;
         }
-        .list th, .list td {
-            padding: 0.5rem;
-            text-align: left;
+        .logout-button:hover {
+            background: #c9302c;
         }
-        .list th {
-            background-color: #f4f4f4;
+        .logout-icon {
+            font-size: 1.5rem;
+        }
+        .content {
+            width: 80%;
+            margin: auto;
+            padding: 1rem;
+            min-height: 400px;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Administración de Tiendas y Productos</h1>
+        <div class="header-container">
+            <div class="header-buttons">
+                <button onclick="renderComponent('tiendas')">Tiendas</button>
+                <button onclick="renderComponent('productos')">Productos</button>
+                <button onclick="renderComponent('usuarios')">Usuarios</button>
+            </div>
+            <button class="logout-button" onclick="logout()">
+                <span class="logout-icon">🔓</span>
+            </button>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Formulario para crear ProductoTienda -->
-        <form action="/createProductoTienda" method="post">
-            <h2>Crear ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID" required>
-            <input type="number" name="producto_id" placeholder="ID del Producto" required>
-            <input type="text" name="tienda_id" placeholder="Código de la Tienda" required>
-            <input type="text" name="color" placeholder="Color" required>
-            <input type="text" name="talle" placeholder="Talle" required>
-            <input type="number" name="cantidad" placeholder="Cantidad" required>
-            <button type="submit">Crear ProductoTienda</button>
-        </form>
-
-        <!-- Formulario para actualizar ProductoTienda -->
-        <form action="/updateProductoTienda" method="post">
-            <h2>Actualizar ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID del ProductoTienda" required>
-            <input type="number" name="producto_id" placeholder="ID del Producto" required>
-            <input type="text" name="tienda_id" placeholder="Código de la Tienda" required>
-            <input type="text" name="color" placeholder="Color" required>
-            <input type="text" name="talle" placeholder="Talle" required>
-            <input type="number" name="cantidad" placeholder="Cantidad" required>
-            <button type="submit">Actualizar ProductoTienda</button>
-        </form>
-
-        <!-- Formulario para eliminar ProductoTienda -->
-        <form action="/deleteProductoTienda" method="post">
-            <h2>Eliminar ProductoTienda</h2>
-            <input type="number" name="id" placeholder="ID del ProductoTienda" required>
-            <button type="submit">Eliminar ProductoTienda</button>
-        </form>
-
-        <!-- Formulario para listar ProductoTienda -->
-        <div class="list">
-            <h2>Lista de ProductoTienda</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Producto</th>
-                        <th>Código Tienda</th>
-                        <th>Color</th>
-                        <th>Talle</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody id="productoTiendaList">
-                    <!-- Aquí se llenarán los datos de ProductoTienda con JavaScript -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Similar formularios y listas para Producto, Tienda y Usuario aquí -->
-
+    <div class="content" id="content">
+        <!-- Aquí se renderizarán los Lit Elements -->
     </div>
 
     <script>
-        // Ejemplo de cómo puedes llenar la lista con datos desde el servidor
-        async function loadProductoTiendas() {
-            try {
-                const response = await fetch('/listProductoTiendas');
-                const data = await response.json();
-                const tableBody = document.getElementById('productoTiendaList');
+        // Función para renderizar el componente correspondiente
+        function renderComponent(component) {
+            const content = document.getElementById('content');
+            content.innerHTML = ''; // Limpiar el contenido actual
 
-                data.productos.forEach(productoTienda => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${productoTienda.id}</td>
-                        <td>${productoTienda.producto_id}</td>
-                        <td>${productoTienda.tienda_id}</td>
-                        <td>${productoTienda.color}</td>
-                        <td>${productoTienda.talle}</td>
-                        <td>${productoTienda.cantidad}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error al cargar ProductoTiendas:', error);
-            }
+            // Crear una nueva etiqueta con el nombre del componente
+            const element = document.createElement(component);
+            content.appendChild(element);
         }
 
-        // Cargar los datos cuando la página se carga
-        document.addEventListener('DOMContentLoaded', loadProductoTiendas);
+        // Función de logout (puedes personalizarla según necesites)
+        function logout() {
+            // Implementar la lógica de logout aquí
+            console.log('Logout');
+        }
     </script>
 </body>
 </html>

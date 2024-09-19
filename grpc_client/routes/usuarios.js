@@ -4,7 +4,7 @@
 
   // Middleware para comprobar la autenticación
   const checkAuthentication = (req, res, next) => {
-    if (!res.locals.isAuthenticated) {
+    if (!req.session.isAuthenticated) {
       res.redirect('/index'); // Redirige a la pantalla de login si no está autenticado
     } else {
       next(); // Continúa con el procesamiento de la ruta
@@ -43,15 +43,14 @@
     }
   );
 
-  // Ruta para manejar el login
   router.post("/login", express.urlencoded({ extended: true }), (req, res) => {
     const { nombreUsuario, contrasena } = req.body;
-
+  
     const usuarioRequest = {
       nombreUsuario,
       contrasena,
     };
-
+  
     usuarioClient.GetUsuario(usuarioRequest, (error, response) => {
       if (error) {
         console.error("Error:", error);
@@ -64,8 +63,10 @@
         response.contrasena === contrasena
       ) {
         console.log("Login exitoso");
-        res.locals.isAuthenticated = true; // Establece la autenticación en true
-        res.render("home"); // Redirige a la página principal después del login exitoso
+        req.session.isAuthenticated = true; // Establece la autenticación en true
+        req.session.save(() => { // Asegura que la sesión se guarda antes de redirigir
+          res.redirect("/home");
+        });
       } else {
         console.log("Usuario o contraseña incorrectos");
         res.render("index", {
@@ -74,10 +75,12 @@
       }
     });
   });
+  
 
   // Ruta para la página de inicio
   router.get('/home', (req, res) => {
-    if (res.locals.isAuthenticated) {
+    console.log('Usuario autenticado:', req.session.isAuthenticated);
+    if (req.session.isAuthenticated) {
       res.render('home'); // Muestra la vista de inicio si está autenticado
     } else {
       res.redirect('index'); // Redirige al login si no está autenticado
@@ -188,7 +191,7 @@
   });
 
   router.get('/logout', (req, res) => {
-    res.locals.isAuthenticated = false; // Desactiva la autenticación
+    req.session.isAuthenticated = false; // Desactiva la autenticación
     res.redirect('/index'); // Redirige al login
   });
 

@@ -9,15 +9,27 @@ const app = express();
 const port = 3000;
 
 
+const session = require('express-session');
+
+app.use(session({
+  secret: 'secret', // Debe ser una cadena única para firmar la sesión
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Si usas HTTPS, cambia a true
+}));
+
+
 // Variable global para gestionar la autenticación
 let isAuthenticated = false;
-
 // Middleware para pasar la variable global a todas las vistas
 app.use((req, res, next) => {
-  res.locals.isAuthenticated = isAuthenticated;
+  if (req.session) {
+    res.locals.isAuthenticated = req.session.isAuthenticated; // Para uso en las vistas
+  } else {
+    res.locals.isAuthenticated = false;
+  }
   next();
 });
-
 
 
 // Configuración para servir archivos estáticos y vistas

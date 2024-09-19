@@ -13,8 +13,10 @@
     "@grpc/proto-loader": "^0.7.13",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
+    "express-session": "^1.18.0",
     "grpc_client": "file:",
     "grpc-tools": "^1.12.4",
+    "lit": "^3.2.0",
     "protoc-gen-js": "^3.21.2"
   }
 }
