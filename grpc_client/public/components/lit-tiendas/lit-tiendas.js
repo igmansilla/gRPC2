@@ -1,4 +1,5 @@
-import { LitElement, html, css } from "lit";
+// Importa lit como módulos CommonJS
+import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
 
 class TiendasComponent extends LitElement {
   static get properties() {
@@ -18,7 +19,8 @@ class TiendasComponent extends LitElement {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      this.tiendas = await response.json();
+      this.tiendas = (await response.json())?.tiendas;
+      debugger
     } catch (error) {
       console.error("Error al cargar las tiendas:", error);
     }
@@ -47,10 +49,11 @@ class TiendasComponent extends LitElement {
     }
   `;
 
-  rrender() {
+  render() {
+    debugger
     return html`
       <h2>Lista de Tiendas</h2>
-      ${this.tiendas.length > 0
+      ${this.tiendas?.length > 0
         ? html`
             <table>
               <thead>

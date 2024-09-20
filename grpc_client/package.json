@@ -4,7 +4,8 @@
   "description": "cliente grpc",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node cliente.js",
+    "dev": "nodemon cliente.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "grpc-tools": "^1.12.4",
     "lit": "^3.2.0",
     "protoc-gen-js": "^3.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }

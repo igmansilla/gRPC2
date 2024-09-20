@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://cdn.skypack.dev/lit"></script>
+    <script type="module" src="../components/lit-tiendas/lit-tiendas.js"></script>
+    <script type="module" src="../components/lit-productos/lit-productos.js"></script>
+    <script type="module" src="../components/lit-usuarios.js"></script>
     <title>Administración de Tiendas y Productos</title>
     <style>
         body {
@@ -11,11 +16,13 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         header {
             background: #333;
             color: #fff;
             padding: 1rem 0;
         }
+
         .header-container {
             width: 80%;
             margin: auto;
@@ -23,10 +30,12 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .header-buttons {
             display: flex;
             gap: 1rem;
         }
+
         .header-buttons button {
             background: #555;
             color: white;
@@ -36,9 +45,11 @@
             border-radius: 4px;
             font-size: 1rem;
         }
+
         .header-buttons button:hover {
             background: #777;
         }
+
         .logout-button {
             background: #d9534f;
             color: white;
@@ -48,12 +59,15 @@
             border-radius: 50%;
             font-size: 1.2rem;
         }
+
         .logout-button:hover {
             background: #c9302c;
         }
+
         .logout-icon {
             font-size: 1.5rem;
         }
+
         .content {
             width: 80%;
             margin: auto;
@@ -62,13 +76,14 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="header-container">
             <div class="header-buttons">
-                <button onclick="renderComponent('tiendas')">Tiendas</button>
-                <button onclick="renderComponent('productos')">Productos</button>
-                <button onclick="renderComponent('usuarios')">Usuarios</button>
+                <button onclick="renderComponent('lit-tiendas')">Tiendas</button>
+                <button onclick="renderComponent('lit-productos')">Productos</button>
+                <button onclick="renderComponent('lit-usuarios')">Usuarios</button>
             </div>
             <button class="logout-button" onclick="logout()">
                 <span class="logout-icon">🔓</span>
@@ -91,11 +106,22 @@
             content.appendChild(element);
         }
 
-        // Función de logout (puedes personalizarla según necesites)
-        function logout() {
-            // Implementar la lógica de logout aquí
-            console.log('Logout');
+        // Función de logout
+        async function logout() {
+            try {
+                const response = await fetch('/logout', { method: 'GET' });
+
+                if (response.ok) {
+                    // Redirige a la página de login
+                    window.location.href = '/index';
+                } else {
+                    console.error('Error al hacer logout:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error en la solicitud de logout:', error);
+            }
         }
     </script>
 </body>
+
 </html>

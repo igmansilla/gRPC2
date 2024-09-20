@@ -42,11 +42,33 @@ class TiendaService(tienda_pb2_grpc.TiendaServiceServicer):
 
     def ListTiendas(self, request, context):
         cursor = self.db.get_cursor()
-        cursor.execute("SELECT * FROM tiendas")
+
+        # Realiza la consulta para obtener las tiendas y sus productos relacionados
+        query = '''
+        SELECT 
+            t.codigo, t.direccion, t.ciudad, t.provincia, t.habilitada, 
+            GROUP_CONCAT(pt.producto_id) as producto_ids
+        FROM tiendas t
+        LEFT JOIN producto_tienda pt ON t.codigo = pt.tienda_id
+        GROUP BY t.codigo, t.direccion, t.ciudad, t.provincia, t.habilitada
+        '''
+        cursor.execute(query)
         rows = cursor.fetchall()
-        tiendas = [
-            tienda_pb2.Tienda(
-                id=row[0], nombre=row[1], direccion=row[2], telefono=row[3]
-            ) for row in rows
-        ]
+
+        tiendas = []
+        for row in rows:
+            # Convertir la cadena concatenada de producto_ids a una lista de enteros
+            producto_ids = [int(pid) for pid in row[5].split(',')] if row[5] else []
+
+            tienda = tienda_pb2.Tienda(
+                codigo=row[0],
+                direccion=row[1],
+                ciudad=row[2],
+                provincia=row[3],
+                habilitada=row[4],
+                producto_ids=producto_ids
+            )
+            tiendas.append(tienda)
+
+        # Devolver la lista de tiendas en el formato esperado
         return tienda_pb2.TiendaList(tiendas=tiendas)

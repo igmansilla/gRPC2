@@ -77,11 +77,12 @@ router.get('/listTiendas', (req, res) => {
   tiendaClient.ListTiendas({}, (error, response) => {
     if (error) {
       console.error('Error:', error);
-      res.render('index', { message: 'Error: ' + error.message, usuarios: null, productos: null, tiendas: null });
+      res.status(500).json({ error: error.message });
     } else {
-      res.render('index', { message: 'Tiendas obtenidas', usuarios: null, productos: null, tiendas: response.tiendas });
+      res.status(200).json({ message: 'Tiendas obtenidas', tiendas: response.tiendas });
     }
   });
 });
+
 
 module.exports = router;

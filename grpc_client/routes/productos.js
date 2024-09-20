@@ -74,16 +74,16 @@ router.post('/deleteProducto', express.urlencoded({ extended: true }), (req, res
   });
 });
 
-// Ruta para listar todos los productos
 router.get('/listProductos', (req, res) => {
   productoClient.ListProductos({}, (error, response) => {
     if (error) {
       console.error('Error:', error);
-      res.render('index', { message: 'Error: ' + error.message, usuarios: null, productos: null, tiendas: null });
+      res.status(500).json({ error: 'Error al obtener los productos' });
     } else {
-      res.render('index', { message: 'Productos obtenidos', usuarios: null, productos: response.productos, tiendas: null });
+      res.json({ productos: response.productos });
     }
   });
 });
+  
 
 module.exports = router;
