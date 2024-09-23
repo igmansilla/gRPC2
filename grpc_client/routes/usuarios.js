@@ -112,70 +112,43 @@ router.get("/getUsuario/:id", checkAuthentication, (req, res) => {
 });
 
 // Ruta para actualizar un usuario
-router.post(
-  "/updateUsuario",
-  express.urlencoded({ extended: true }),
+router.put(
+  "/updateUsuario/:id",
+  express.json(),
   checkAuthentication,
   (req, res) => {
     const usuario = {
-      id: parseInt(req.body.id),
-      nombreUsuario: req.body.nombreUsuario,
-      contrasena: req.body.contrasena,
-      tienda_id: req.body.tienda_id,
-      nombre: req.body.nombre,
-      apellido: req.body.apellido,
+      id: parseInt(req.params.id), // Obtener el ID desde la URL
+      nombreUsuario: req.body.nombreUsuario ?? "",
+      contrasena: req.body.contrasena ?? "",
+      tienda_id: req.body.tienda_id ?? 0,
+      nombre: req.body.nombre ?? "",
+      apellido: req.body.apellido ?? "",
       habilitado: req.body.habilitado === "true",
     };
 
     usuarioClient.UpdateUsuario(usuario, (error, response) => {
       if (error) {
         console.error("Error:", error);
-        res.render("index", {
-          message: "Error: " + error.message,
-          usuario: null,
-          producto: null,
-          tienda: null,
-        });
-      } else {
-        res.render("index", {
-          message: "Usuario actualizado: " + response.nombreUsuario,
-          usuario: response,
-          producto: null,
-          tienda: null,
-        });
+        return res.status(500).json({ message: "Error: " + error.message });
       }
+      return res.json({ message: "Usuario actualizado", usuario: response });
     });
   }
 );
 
 // Ruta para eliminar un usuario
-router.post(
-  "/deleteUsuario",
-  express.urlencoded({ extended: true }),
-  checkAuthentication,
-  (req, res) => {
-    const request = { id: parseInt(req.body.id) };
+router.delete("/deleteUsuario/:id", checkAuthentication, (req, res) => {
+  const request = { id: parseInt(req.params.id) }; // Obtener el ID desde la URL
 
-    usuarioClient.DeleteUsuario(request, (error, response) => {
-      if (error) {
-        console.error("Error:", error);
-        res.render("index", {
-          message: "Error: " + error.message,
-          usuario: null,
-          producto: null,
-          tienda: null,
-        });
-      } else {
-        res.render("index", {
-          message: "Usuario eliminado: " + request.id,
-          usuario: null,
-          producto: null,
-          tienda: null,
-        });
-      }
-    });
-  }
-);
+  usuarioClient.DeleteUsuario(request, (error, response) => {
+    if (error) {
+      console.error("Error:", error);
+      return res.status(500).json({ message: "Error: " + error.message });
+    }
+    return res.json({ message: "Usuario eliminado", id: request.id });
+  });
+});
 
 // Ruta para listar todos los usuarios
 router.get("/listUsuarios", checkAuthentication, (req, res) => {

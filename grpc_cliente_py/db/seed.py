@@ -5,11 +5,11 @@ def insert_test_data(conn):
     queries = [
         '''
         INSERT INTO usuarios (nombre_usuario, contrasena, tienda_id, nombre, apellido, habilitado)
-        VALUES ('juan', 'password123', 'T001', 'Juan', 'Pérez', 1)
+        VALUES ('juan', '1', 'T001', 'Juan', 'Pérez', 1)
         ''',
         '''
         INSERT INTO usuarios (nombre_usuario, contrasena, tienda_id, nombre, apellido, habilitado)
-        VALUES ('ana', 'password123', 'T002', 'Ana', 'Gómez', 1)
+        VALUES ('ana', '2', 'T002', 'Ana', 'Gómez', 1)
         '''
     ]
     for query in queries:
